@@ -3,29 +3,22 @@
 
   <div>
     <h3>Pilihan Ganda</h3>
-    <div>
+    <div v-for="i in pGList">
       <div>
-        <strong>{{ pertanyaanPG1 }}</strong>
+        <strong>{{ i.pertanyaan }}</strong>
       </div>
-      <div>
-        <em>{{ pilihanPG1 }}</em>
-      </div>
-    </div>
-    <div>
-      <div>
-        <strong>{{ pertanyaanPG2 }}</strong>
-      </div>
-      <div>
-        <em>{{ pilihanPG2 }}</em>
+      <div v-for="j in i.jawaban">
+        <em>{{ j }}</em>
       </div>
     </div>
-    <br>
+  </div>
+
+  <div>
     <h3>Essay</h3>
-    <div>
-      <strong>{{ pertanyaanEssay1 }}</strong>
-    </div>
-    <div>
-      <strong>{{ pertanyaanEssay2 }}</strong>
+    <div v-for="n in essayList">
+      <div>
+        <strong>{{ n }}</strong>
+      </div>
     </div>
   </div>
 </template>
@@ -39,24 +32,34 @@ import { Options, Vue } from 'vue-class-component';
   }
 })
 export default class SolidS extends Vue {
-  pertanyaanEssay1: string = '';
-  pertanyaanEssay2: string = '';
-  pertanyaanPG1: string = '';
-  pertanyaanPG2: string = '';
-  pilihanPG1: string[] = [];
-  pilihanPG2: string[] = [];
+  pGList: { pertanyaan: string, jawaban: string[] }[] = [];
+  essayList: string[] = [];
 
-  beforeMount(): void {
+  mounted(): void {
     this.generateUjian();
   }
 
   generateUjian() {
-    this.pertanyaanEssay1 = 'Siapa ploklamator NKRI?';
-    this.pertanyaanEssay2 = 'Siapa penjajah Indonesia?'
-    this.pertanyaanPG1 = 'Tahun berapa Indonesia merdeka?';
-    this.pertanyaanPG2 = 'Siapa wakil presiden Soekarno?';
-    this.pilihanPG1 = ['A. 1945', 'B. 1459', 'C. 1594'];
-    this.pilihanPG2 = ['A. Soekirman', 'B. Soelawesi', 'C. Mas Ahung'];
+    this.generatePG();
+    this.generateEssay();
+  }
+  generatePG() {
+    this.pGList = [
+      {
+        pertanyaan: 'Tahun berapa Indonesia merdeka?',
+        jawaban: ['A. 1945', 'B. 1459', 'C. 1594']
+      },
+      {
+        pertanyaan: 'Siapa wakil presiden Soekarno?',
+        jawaban: ['A. Soekirman', 'B. Soelawesi', 'C. Mas Ahung']
+      }
+    ]
+  }
+  generateEssay() {
+    this.essayList = [
+      'Siapa ploklamator NKRI?',
+      'Siapa penjajah Indonesia?'
+    ]
   }
 }
 </script>
