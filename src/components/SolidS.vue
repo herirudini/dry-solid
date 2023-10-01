@@ -7,8 +7,14 @@
       <div>
         <strong>{{ i.pertanyaan }}</strong>
       </div>
-      <div v-for="j in i.jawaban">
-        <em>{{ j }}</em>
+      <div>
+        <em>A. {{ i.pilihan.a }}</em>
+        <br>
+        <em>B. {{ i.pilihan.b }}</em>
+        <br>
+        <em>C. {{ i.pilihan.c }}</em>
+        <br>
+        <!-- <em v-if="i.totalPilihan === 4">D. {{ i.pilihan.d }}</em> -->
       </div>
     </div>
   </div>
@@ -25,6 +31,7 @@
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
+import { IPG } from '../interfaces/pg.interface';
 
 @Options({
   props: {
@@ -32,7 +39,7 @@ import { Options, Vue } from 'vue-class-component';
   }
 })
 export default class SolidS extends Vue {
-  pGList: { pertanyaan: string, jawaban: string[] }[] = [];
+  pGList: IPG[] = [];
   essayList: string[] = [];
 
   mounted(): void {
@@ -47,12 +54,17 @@ export default class SolidS extends Vue {
     this.pGList = [
       {
         pertanyaan: 'Tahun berapa Indonesia merdeka?',
-        jawaban: ['A. 1945', 'B. 1459', 'C. 1594']
+        pilihan: {a: '1945', b: '1459', c: '1594'}
       },
       {
         pertanyaan: 'Siapa wakil presiden Soekarno?',
-        jawaban: ['A. Soekirman', 'B. Soelawesi', 'C. Mas Ahung']
-      }
+        pilihan: {a: 'Soekirman', b: 'Soelawesi', c: 'Mas Ahung'}
+      },
+      // {
+      //   pertanyaan: 'Siapa wakil presiden Soekarno?',
+      //   pilihan: {a: 'Soekirman', b: 'Soelawesi', c: 'Mas Ahung', d: 'Bang Bima'},
+      //   totalPilihan: 4
+      // },
     ]
   }
   generateEssay() {
