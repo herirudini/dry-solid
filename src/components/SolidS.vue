@@ -7,14 +7,9 @@
       <div>
         <strong>{{ i.pertanyaan }}</strong>
       </div>
-      <div>
-        <em>A. {{ i.pilihan.a }}</em>
+      <div v-for="j in i.pilihanList">
+        <em>{{ j }}</em>
         <br>
-        <em>B. {{ i.pilihan.b }}</em>
-        <br>
-        <em>C. {{ i.pilihan.c }}</em>
-        <br>
-        <!-- <em v-if="i.totalPilihan === 4">D. {{ i.pilihan.d }}</em> -->
       </div>
     </div>
   </div>
@@ -52,20 +47,36 @@ export default class SolidS extends Vue {
   }
   generatePG() {
     this.pGList = [
-      {
-        pertanyaan: 'Tahun berapa Indonesia merdeka?',
-        pilihan: {a: '1945', b: '1459', c: '1594'}
-      },
-      {
-        pertanyaan: 'Siapa wakil presiden Soekarno?',
-        pilihan: {a: 'Soekirman', b: 'Soelawesi', c: 'Mas Ahung'}
-      },
-      // {
-      //   pertanyaan: 'Siapa wakil presiden Soekarno?',
-      //   pilihan: {a: 'Soekirman', b: 'Soelawesi', c: 'Mas Ahung', d: 'Bang Bima'},
-      //   totalPilihan: 4
-      // },
+      this.generatorPG(
+        'Tahun berapa Indonesia merdeka?',
+        ['1945', '1459', '1594']
+      ),
+      this.generatorPG(
+        'Siapa wakil presiden Soekarno?',
+        ['Soekirman', 'Soelawesi', 'Mas Ahung']
+      ),
+      this.generatorPG(
+        'Siapa nama guru terkenal?',
+        ['HOS Tjokro Aminoto', 'Soelawesi', 'Mas Ahung', 'Heri Gantengs']
+      ),
     ]
+  }
+  generatorPG(pertanyaan: string, pilihans: string[]): IPG {
+    let newPilihans: IPG['pilihanList'] = [];
+    pilihans.forEach((item, index) => {
+      const alphabetIndex = this.getAlphabetSequences(index);
+      const pilihan = `${alphabetIndex} ${item}`
+      newPilihans.push(pilihan);
+    })
+    const pilihanList = newPilihans
+    return {
+      pertanyaan,
+      pilihanList
+    }
+  }
+  getAlphabetSequences(index: number) {
+    const alphabet = String.fromCharCode(65 + index);
+    return `${alphabet}.`;
   }
   generateEssay() {
     this.essayList = [
